@@ -27,6 +27,10 @@ def init_db():
     conn.commit()
     conn.close()
 
+def get_bot_user_id():
+    resp = requests.get("https://slack.com/api/auth.test", headers=headers).json()
+    return resp.get("user_id")
+
 def get_channel_members():
     print(f"[DEBUG] Fetching members for channel: {CHANNEL_ID}")
     url = f"https://slack.com/api/conversations.members?channel={CHANNEL_ID}"
@@ -76,8 +80,9 @@ def generate_pairs(members, recent_pairs):
 
 def main():
     init_db()
+    bot_id = get_bot_user_id()
     members = get_channel_members()
-    members = [m for m in members if m != "USLACKBOT"]
+    members = [m for m in members if m != "USLACKBOT" and m != bot_id]
     print("[DEBUG] Members after filtering:", members)
     recent = get_recent_pairs()
     pairs = generate_pairs(members, recent)
