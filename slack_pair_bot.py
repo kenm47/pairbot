@@ -60,7 +60,7 @@ def save_pairs(pairs):
 def post_pairs_to_slack(pairs):
     print("[DEBUG] Posting pairs to Slack")
     for u1, u2 in pairs:
-        text = f"<@{u1}> ⮔ <@{u2}>"
+        text = f"<@{u1}> meet with <@{u2}>"
         print(f"[DEBUG] Posting message: {text}")
         resp = requests.post(
             "https://slack.com/api/chat.postMessage",
