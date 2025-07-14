@@ -5,7 +5,7 @@ name: Slack Pair Bot
 
 on:
   schedule:
-    - cron: '0 12 */14 * *'  # every 14 days at 12:00 UTC
+    - cron: '0 15 * * 2'  # every Tuesday at 15:00 UTC (9 AM Mountain Time)
   workflow_dispatch:
 
 jobs:

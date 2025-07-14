@@ -1,6 +1,7 @@
 import os
 import random
 import requests
+import datetime
 
 SLACK_TOKEN = os.getenv("SLACK_BOT_TOKEN")
 CHANNEL_ID = os.getenv("SLACK_CHANNEL_ID")
@@ -58,6 +59,13 @@ def generate_pairs(members):
     return pairs
 
 def main():
+    # Check if current ISO week is odd - exit early for true bi-weekly behavior
+    current_iso_week = datetime.date.today().isocalendar()[1]
+    if current_iso_week % 2 == 1:
+        print(f"[DEBUG] Current ISO week {current_iso_week} is odd. Skipping execution for bi-weekly schedule.")
+        return
+    
+    print(f"[DEBUG] Current ISO week {current_iso_week} is even. Proceeding with pair generation.")
     bot_id = get_bot_user_id()
     members = get_channel_members()
     members = [m for m in members if m != "USLACKBOT" and m != bot_id]
