@@ -2,7 +2,7 @@
 
 Pairs random users in a Slack channel every two weeks.
 
-You've provided a Python script designed to randomly pair members in a Slack channel and announce these pairs, while also keeping track of recent pairings to avoid repetition. This is a great tool for fostering team connections\!
+You've provided a Python script designed to randomly pair members in a Slack channel and announce these pairs. This is a great tool for fostering team connections\!
 
 Here's a **markdown version** of the `README.md` file for your code:
 
@@ -10,14 +10,13 @@ Here's a **markdown version** of the `README.md` file for your code:
 
 # Slack Pair Bot
 
-This Python script is a simple bot that facilitates team bonding by randomly pairing members within a specified Slack channel. It ensures that recent pairings aren't immediately repeated, encouraging broader interaction among team members.
+This Python script is a simple bot that facilitates team bonding by randomly pairing members within a specified Slack channel.
 
 -----
 
 ## Features
 
   * **Random Pair Generation**: Shuffles and pairs available Slack channel members.
-  * **Pairing History**: Uses a SQLite database to remember past pairings and avoids repeating them within a configurable timeframe (default: 4 weeks).
   * **Slack Integration**: Posts the newly generated pairs directly into your designated Slack channel.
   * **Bot Exclusion**: Automatically excludes the bot's own user ID and the generic Slackbot from pairing.
 
@@ -101,12 +100,10 @@ python your_script_name.py
 
 The script will:
 
-1.  Initialize a SQLite database (`pairs.db`) if it doesn't exist.
-2.  Fetch all members from the specified `SLACK_CHANNEL_ID`.
-3.  Filter out the bot itself and the `USLACKBOT`.
-4.  Generate new pairs, avoiding those made in the last 4 weeks (by default).
-5.  Save the new pairs to the database.
-6.  Post each generated pair to the Slack channel.
+1.  Fetch all members from the specified `SLACK_CHANNEL_ID`.
+2.  Filter out the bot itself and the `USLACKBOT`.
+3.  Generate random pairs from the available members.
+4.  Post each generated pair to the Slack channel.
 
 ### Running Automatically (e.g., with Cron)
 
@@ -119,25 +116,6 @@ You can schedule this script to run periodically (e.g., weekly) using tools like
 ```
 
 Make sure the full path to your Python executable and script is correct. Also, ensure that the environment variables (`SLACK_BOT_TOKEN`, `SLACK_CHANNEL_ID`) are set in the cron environment or hardcoded within the script (though environment variables are preferred for security).
-
------
-
-## Database
-
-The script uses a **SQLite database** named `pairs.db` to store past pairings. This allows the bot to remember who has been paired with whom and avoid immediate repetitions.
-
-  * **File**: `pairs.db`
-  * **Table**: `pairs`
-  * **Columns**:
-      * `user1` (TEXT): ID of the first user in a pair.
-      * `user2` (TEXT): ID of the second user in a pair.
-      * `timestamp` (INTEGER): Unix timestamp when the pair was created.
-
------
-
-## Customization
-
-  * **Recent Pairs Window**: By default, the bot remembers pairs for the last 4 weeks. You can adjust this by modifying the `weeks` parameter in the `get_recent_pairs` function call within `main()`.
 
 -----
 
