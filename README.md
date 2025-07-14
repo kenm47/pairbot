@@ -17,6 +17,7 @@ This Python script is a simple bot that facilitates team bonding by randomly pai
 ## Features
 
   * **Random Pair Generation**: Shuffles and pairs available Slack channel members.
+  * **Odd Number Handling**: When there's an odd number of members, creates one group of three to ensure everyone is included.
   * **Slack Integration**: Posts the newly generated pairs directly into your designated Slack channel.
   * **Bot Exclusion**: Automatically excludes the bot's own user ID and the generic Slackbot from pairing.
 
@@ -102,8 +103,8 @@ The script will:
 
 1.  Fetch all members from the specified `SLACK_CHANNEL_ID`.
 2.  Filter out the bot itself and the `USLACKBOT`.
-3.  Generate random pairs from the available members.
-4.  Post each generated pair to the Slack channel.
+3.  Generate random pairs from the available members (creating one group of three if there's an odd number).
+4.  Post each generated pair or group to the Slack channel.
 
 ### Running Automatically (e.g., with Cron)
 
