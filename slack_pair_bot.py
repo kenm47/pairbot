@@ -23,8 +23,16 @@ def get_channel_members():
 
 def post_pairs_to_slack(pairs):
     print("[DEBUG] Posting pairs to Slack")
-    for u1, u2 in pairs:
-        text = f"<@{u1}> meet with <@{u2}>"
+    for group in pairs:
+        if len(group) == 2:
+            u1, u2 = group
+            text = f"<@{u1}> meet with <@{u2}>"
+        elif len(group) == 3:
+            u1, u2, u3 = group
+            text = f"<@{u1}>, <@{u2}>, and <@{u3}> meet together"
+        else:
+            continue  # Skip invalid groups
+        
         print(f"[DEBUG] Posting message: {text}")
         resp = requests.post(
             "https://slack.com/api/chat.postMessage",
@@ -36,9 +44,17 @@ def post_pairs_to_slack(pairs):
 def generate_pairs(members):
     random.shuffle(members)
     pairs = []
+    
+    # If odd number of members, create one group of three
+    if len(members) % 2 == 1 and len(members) >= 3:
+        u1, u2, u3 = members.pop(), members.pop(), members.pop()
+        pairs.append((u1, u2, u3))
+    
+    # Pair the remaining members
     while len(members) >= 2:
         u1, u2 = members.pop(), members.pop()
         pairs.append((u1, u2))
+    
     return pairs
 
 def main():
