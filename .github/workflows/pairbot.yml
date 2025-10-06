@@ -5,9 +5,9 @@ name: Slack Pair Bot
 
 on:
   schedule:
-    - cron: '0 12 */14 * *'  # every 14 days at 12:00 UTC
+  - cron: '0 12 1,15 * *'  # 1st and 15th at 12:00 UTC
   workflow_dispatch:
-
+  
 jobs:
   run-bot:
     runs-on: ubuntu-latest
